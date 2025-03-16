@@ -5,20 +5,6 @@
   scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar {
-  background-color: rgb(74, 136, 168);
-  width: 10px;
-  border-radius: 12px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(250, 253, 255);
-  width: 10px;
-  border-radius: 12px;
-}
-
-
-
 
 /* Navbar Styles */
 
@@ -840,7 +826,7 @@ padding-top: 2rem;
   }
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 480px){
 .carousel{
   width: 60%;
   max-width: 500px;
@@ -868,10 +854,6 @@ padding-top: 2rem;
   }
   .foot>h5{
     bottom: 0;
-  }
-
-  ::-webkit-scrollbar {
-    background: none;
   }
   .ff {
     flex-direction: column;
