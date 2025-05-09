@@ -8,11 +8,7 @@
   <link rel="icon" href="./fa.jpg" type="image/x-icon">
   <script src="https://kit.fontawesome.com/aea47affd4.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-   <script>
-     (function () {
-       emailjs.init('d7LZg9ro8mc9v6RvL'); // Replace with your EmailJS public key
-     })();
-   </script>
+
 </head>
 <body>
   
@@ -41,17 +37,18 @@
   </div>
 </div>
 
-
-
-
-
   <!-- Home section -->
   <section id="home">
     <div  class="home">
-      <span data-aos="fade-up"
-      data-aos-duration="3000">HELLO I'M</span>
-      <h2><span data-aos="fade-up"
-        data-aos-duration="3000" class="typewriter">Abdullateef Abdulbasit Ayoola</span></h2>
+      <span>HELLO I'M</span>
+      
+<div class="body">
+<div class="typing-container">
+        <div id="typing-text"></div>
+      </div> 
+</div>
+
+
       <img data-aos="fade-up" src="pic.png" alt="my-pic" /><br />
       <div class="but">
         <a target="_blank" class="git" href="./cv.pdf"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
@@ -334,5 +331,65 @@
     <h5><i class="fa fa-copyright" aria-hidden="true"></i>Silent. All rights reserved</h5>
   </div>
   </footer>
+  <script>
+    class TypeWriter {
+        constructor(element, words, options = {}) {
+            this.element = element;
+            this.words = words;
+            this.options = {
+                typingSpeed: 100,
+                deleteSpeed: 60,
+                pauseDuration: 1200,
+                ...options
+            };
+            this.index = 0;
+            this.isDeleting = false;
+            this.text = '';
+            this.animate();
+        }
+
+        animate() {
+            const currentWord = this.words[this.index % this.words.length];
+            
+            if (this.isDeleting) {
+                this.text = currentWord.substring(0, this.text.length - 1);
+            } else {
+                this.text = currentWord.substring(0, this.text.length + 1);
+            }
+
+            this.element.textContent = this.text;
+            
+            let typeSpeed = this.options.typingSpeed;
+            
+            if (this.isDeleting) {
+                typeSpeed = this.options.deleteSpeed;
+            }
+
+            if (!this.isDeleting && this.text === currentWord) {
+                typeSpeed = this.options.pauseDuration;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.text === '') {
+                this.isDeleting = false;
+                this.index++;
+                typeSpeed = this.options.typingSpeed / 2;
+            }
+
+            setTimeout(() => this.animate(), typeSpeed);
+        }
+    }
+
+    // Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        const words = ['Abdulateef Abdulbasit Ayoola', 'Silent Achiever'];
+        const element = document.getElementById('typing-text');
+        
+        new TypeWriter(element, words, {
+            typingSpeed: 100,
+            deleteSpeed: 60,
+            pauseDuration: 1200
+        });
+    });
+</script>
+<script src="./script.js"></script>
 </body>
 </html>
