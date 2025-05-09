@@ -3,8 +3,28 @@
   padding: 0;
   font-family: Arial, sans-serif;
   scroll-behavior: smooth;
+  justify-content: center;
+  align-items: center;
 }
 
+.body{
+  letter-spacing: 2px;
+  font-family: monospace;
+}
+
+
+.typing-container {
+  position: relative;
+  padding: 1rem;
+}
+
+#typing-text {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #00ff9d;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 /* Navbar Styles */
 
@@ -61,13 +81,18 @@ color: green;
 
 body {
   background-color: #1f1f38;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   justify-content: center;
   align-items: center;
   scroll-behavior: smooth;
 }
 
+
+.typing-container{
+  padding: 1rem;
+  position: relative;
+}
 section {
   padding: 20px;
   margin-top: 5px;
@@ -95,32 +120,6 @@ section {
   margin-bottom: 100px;
 }
 
-.typewriter {
-  display: inline-block;
-  border-right: 4px solid #e94560;
-  white-space: nowrap;
-  overflow: hidden;
-  animation: typing 7s steps(60, end), blink 0.9s step-end infinite;
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #4db5ff;
-  }
-}
 .home > img {
   width: 270px;
   height: 270px;
@@ -188,6 +187,7 @@ section {
 .projects {
   gap: 14px;
   display: flex;
+  flex-wrap: wrap;
   margin: 15px;
   justify-content: center;
 }
@@ -250,8 +250,8 @@ section {
   text-align: justify;
   line-height: 30px;
   font-size: 20px;
-  padding-left: 81.9px;
-  padding-right: 81.9px;
+  padding-left: 50px;
+  padding-right: 50px;
   font-family: serif;
   margin-bottom: 32px;
 }
@@ -263,7 +263,7 @@ section {
   text-decoration: none;
   transition: 0.4s ease-in-out;
   padding: 11px;
-  margin-left: 82px;
+  margin-left: 50px;
 }
 
 .graph > a:hover {
@@ -337,6 +337,7 @@ section {
   justify-content: center;
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: 3rem;
 }
 
@@ -388,7 +389,7 @@ section {
 span{
   font-family: monospace;
   font-size: 14px;
-  padding-left: 1.6rem;
+  padding-left: .3rem;
   color: #ababc4;
   font-weight: light;
 }
@@ -405,6 +406,7 @@ span{
 
 .uus {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 4rem;
@@ -648,6 +650,7 @@ scale: 1.3;
 .handle{
   padding-top: 4rem;
   display: flex;
+  flex-wrap: wrap;
   gap: 4rem;
   justify-content: center;
   padding-bottom: 6rem;
@@ -717,8 +720,9 @@ text-align: center;
 
 .lin{
 justify-content: space-between;
-gap: 4rem;
+gap: 3rem;
 display: flex;
+flex-wrap: wrap;
 padding-top: 2rem;
 }
 
@@ -816,11 +820,9 @@ padding-top: 2rem;
 }
 
 @media screen and (max-width: 900px){
-  .box,
   .cd1{
-    max-width: 100%;
+    width: 470px;
   }
-  
   .home h2{
     font-size: 1.5rem;
   }
@@ -829,17 +831,15 @@ padding-top: 2rem;
 @media screen and (max-width: 480px){
 .carousel{
   width: 60%;
-  max-width: 500px;
 }
 
   .footer{
     height: fit-content;
-  width: auto;
   }
 
   .lin{
-    flex-direction: column;
-    gap: .5rem;
+    gap: 1rem;
+    justify-content: center;
   }
 
   .handle{
@@ -863,9 +863,9 @@ padding-top: 2rem;
 
   .cd1 {
     height: 300px;
-    width: 350px;
+    width: 280px;
     box-shadow: none;
-    gap: 3rem;
+    gap: 2rem;
   }
 
   .lan {
