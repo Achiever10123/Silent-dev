@@ -48,33 +48,3 @@ slides.addEventListener('touchend', (e) => {
 AOS.init({
   duration: 2000,
 });
-
-
-
-//Form Sending
-mailjs.init('d7LZg9ro8mc9v6RvL'); // Replace with your Public Key
-
-document.getElementById('contactForm').addEventListener('submit', function (event) {
-  event.preventDefault();
-
-  const formData = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    message: document.getElementById('message').value,
-  };
-
-  if (!formData.name || !formData.email || !formData.message) {
-    alert('Please fill out all fields.');
-    return;
-  }
-
-  emailjs.send('service_m4tzvuk', 'template_o98aznf', formData) // Replace with your Service ID and Template ID
-    .then(() => {
-      alert('Message sent successfully!');
-      document.getElementById('contactForm').reset();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert('Failed to send message. Please try again.');
-    });
-});
