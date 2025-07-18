@@ -9,8 +9,8 @@
   <script src="https://kit.fontawesome.com/aea47affd4.js" crossorigin="anonymous"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   
-  <link rel="preload" href="./pic.webp" as="image">
-  <link rel="preload" href="./CEO.webp" as="image">
+  <link rel="preload" href="./pic.png" as="image">
+  <link rel="preload" href="./CEO.png" as="image">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   
@@ -137,6 +137,23 @@
     background-color: var(--primary-accent);
     color: white;
   }
+
+  /* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar */
+    width: 0;      /* For horizontal scrollbars */
+    height: 0;     /* For vertical scrollbars */
+}
+
+/* For Firefox */
+body {
+    scrollbar-width: none; /* Hides the scrollbar */
+}
+
+/* For Internet Explorer and Edge */
+body {
+    -ms-overflow-style: none; /* Hides the scrollbar */
+}
 
   /* Typing Effect */
   .typing-container {
@@ -1614,11 +1631,11 @@
           <h1 id="typing-text"></h1>
         </div>
         <picture data-aos="fade-up">
-          <source srcset="pic.webp" type="image/webp">
+          <source srcset="pic.png" type="image/webp">
           <img src="pic.png" alt="Abdullateef Abdulbasit's professional portrait" loading="lazy"/>
         </picture>
         <div class="but">
-          <a target="_blank" class="git" href="./cv.pdf"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
+          <a target="_blank" class="git" href="https://www.dropbox.com/scl/fi/ftbehxhrnge4pngkq87p8/CV.pdf?rlkey=tecv9sla0c2pnb31oyyhpegsz&st=6h4s1kh3&dl=0"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
           <a target="_blank" class="Demo" href="https://wa.me/+2347041979439">Let's Talk <i class="fa fa-commenting-o" aria-hidden="true"></i></a>
         </div>
         <p data-aos="fade-right">Experienced Front-end Web Developer</p>
@@ -1631,8 +1648,8 @@
       <div data-aos="fade-right" class="con">
         <div class="ani">
           <picture>
-            <source srcset="CEO.webp" type="image/webp">
-            <img src="CEO.png" alt="Illustrative image of a person at a desk representing a CEO or professional" loading="lazy"/>
+            <source srcset="CEO.png" type="image/webp">
+            <img src="CEO.png" alt="Illustrative image of the CEO" loading="lazy"/>
           </picture>
         </div>
       </div>
@@ -2286,7 +2303,7 @@
       // Simulate Project Data Fetch with Loading Animation
       const projectsData = [
         {
-          imgSrc: "./tda.webp",
+          imgSrc: "./tda.png",
           fallbackImgSrc: "./tda.png",
           altText: "Screenshot of a To-Do App project",
           title: "To-Do App",
@@ -2294,7 +2311,7 @@
           demoLink: "https://todo-app-phi-seven-58.vercel.app"
         },
         {
-          imgSrc: "./LI.webp",
+          imgSrc: "./LI.png",
           fallbackImgSrc: "./LI.png",
           altText: "Screenshot of a Login Form project",
           title: "Login Form",
@@ -2302,7 +2319,7 @@
           demoLink: "https://login-form-beta-seven.vercel.app"
         },
         {
-          imgSrc: "./SU.webp",
+          imgSrc: "./SU.png",
           fallbackImgSrc: "./SU.png",
           altText: "Screenshot of a Sign-up Form project",
           title: "Sign-up Form",
@@ -2310,7 +2327,7 @@
           demoLink: "https://signup-form-pink.vercel.app"
         },
         {
-          imgSrc: "./tts.webp",
+          imgSrc: "./tts.png",
           fallbackImgSrc: "./tts.png",
           altText: "Screenshot of a Text-to-Speech Converter project",
           title: "Text To Speech",
