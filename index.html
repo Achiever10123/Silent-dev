@@ -6,9 +6,10 @@
   <title>Abdullateef Abdulbasit | Full Stack Developer | Web Developer Portfolio</title>
   <meta name="description" content="Abdullateef Abdulbasit is an experienced Full Stack Developer specializing in HTML, CSS, JavaScript, React.js, and Node.js. View my portfolio for web development projects and contact me for your next project." />
   <link rel="icon" href="./fa.jpg" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/aea47affd4.js" crossorigin="anonymous"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  
+<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preload" href="./pic.png" as="image">
   <link rel="preload" href="./CEO.png" as="image">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
@@ -78,6 +79,15 @@
   a {
     text-decoration: none;
     color: var(--primary-accent);
+  }
+
+  /* Click animation for all icons */
+  i {
+    transition: transform 0.2s ease;
+  }
+
+  i:active {
+    transform: scale(0.9);
   }
 
   /* Toaster Notification */
@@ -351,6 +361,24 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   }
 
+  /* Animation for Download Icon */
+.but .git:hover .fa-download {
+    animation: bounce 0.6s infinite alternate; /* Apply bounce animation */
+}
+
+.graph > a:hover .fa-download { /* Also apply to the download button in About section */
+    animation: bounce 0.6s infinite alternate;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-5px); /* Moves icon up slightly */
+    }
+}
+
   /* About Section */
   .about h2 {
     color: var(--text-color);
@@ -363,43 +391,150 @@ body {
     animation: hyy 6.2s ease infinite;
   }
 
-  .con {
-    width: 100%;
-    min-height: 450px;
+/* About Section - Card Layout with Flip Animation */
+.con {
+    width: 90%;
+    max-width: 950px;
+    min-height: auto;
     display: flex;
+    flex-direction: row;
+    gap: 40px;
     justify-content: center;
     align-items: center;
-    padding-bottom: 60px;
-  }
+    padding: 30px;
+    border-radius: 20px;
+    background-color: var(--card-bg);
+    box-shadow: 0 10px 30px var(--shadow-color-strong);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    perspective: 1000px;
+}
 
-  .ani {
-    background: linear-gradient(50deg, var(--box-gradient-start), var(--box-gradient-end));
-    width: 380px; /* Wider */
-    height: 450px; /* Taller */
-    border-radius: 15px; /* More rounded */
+.con:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px var(--shadow-color-strong);
+}
+
+.ani {
+    background: none;
+    width: 300px;
+    height: 350px;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 12px 25px var(--shadow-color-strong);
+    box-shadow: 0 8px 20px var(--shadow-color);
     position: relative;
     overflow: hidden;
-  }
+    flex-shrink: 0;
+    padding: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
 
-  .ani > picture img {
-    width: 320px; /* Larger */
-    height: 380px; /* Larger */
-    padding-top: 60px; /* Adjusted padding */
-    rotate: 10deg;
-    transform: translateX(-24px);
-    transition: 0.6s ease;
+.ani:hover {
+    transform: rotateY(180deg);
+}
+
+.ani > picture img {
+    width: 100%;
+    height: 100%;
+    padding: 0;
     object-fit: cover;
-    border-radius: 8px; /* Slightly rounded image inside */
-  }
+    border-radius: 10px;
+    backface-visibility: hidden;
+    transition: transform 0.6s ease;
+}
 
-  .ani > picture img:hover {
-    rotate: 0deg;
-    transform: translateX(0);
-  }
+.ani > picture img:hover {
+    transform: scale(1.05);
+}
+
+/* Back side of the card */
+.ani::after {
+    content: "Abdullateef Abdulbasit";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.graph {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.graph > p {
+    color: var(--secondary-text-color);
+    text-align: left;
+    line-height: 1.9;
+    font-size: 1.15rem;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 30px;
+    max-width: none;
+}
+
+/* Responsive Adjustments for Card */
+@media screen and (max-width: 900px) {
+    .con {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 25px;
+        width: 95%;
+        max-width: 600px;
+    }
+
+    .ani {
+        width: 250px;
+        height: 280px;
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+
+    .ani > picture img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .graph {
+        align-items: center;
+    }
+
+    .graph > p {
+        text-align: center;
+        padding: 0 10px;
+        margin-bottom: 25px;
+    }
+    
+    /* Disable flip animation on mobile */
+    .ani:hover {
+        transform: none;
+    }
+    
+    .ani::after {
+        display: none;
+    }
+}
+
 
   .projects {
     display: flex;
@@ -1450,7 +1585,7 @@ body {
       gap: 1.5rem;
     }
     .lin > a {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
     }
     .foot > h1 {
       font-size: 2rem;
@@ -1478,44 +1613,58 @@ body {
     }
     .home h1 {
       font-size: 1.8rem;
+      margin-bottom: 15px;
     }
     #typing-text {
       font-size: 1.2rem;
     }
     .home > p {
       font-size: 0.9rem;
+      margin-top: 15px;
+    }
+    .home > picture img {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 20px;
     }
     .but {
       flex-direction: column;
       gap: 1rem;
+      padding-top: 20px;
     }
     .but > a {
       width: 80%;
       text-align: center;
       justify-content: center;
+      padding: 10px 20px;
+      font-size: 0.9rem;
     }
     .about h2, .exp h2, .testimonial h2, .Contact-me h2 {
       font-size: 2rem;
       padding-bottom: 25px;
     }
     .ani {
-      width: 280px;
-      height: 320px;
+      width: 250px;
+      height: 280px;
     }
     .ani > picture img {
-      width: 240px;
-      height: 280px;
-      padding-top: 40px;
+      width: 220px;
+      height: 250px;
+      padding-top: 30px;
     }
     .box {
       width: 260px;
+      height: 240px;
     }
     .graph > p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       padding: 0 10px;
+      margin-bottom: 25px;
+      line-height: 1.7;
     }
     .cd1 {
       width: 280px;
+      padding: 20px 15px;
     }
     .projects-container {
       gap: 2rem;
@@ -1528,16 +1677,19 @@ body {
       height: 110px;
     }
     .tt > span {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
     .ton {
       flex-direction: column;
       gap: 8px;
+      padding-top: 20px;
     }
     .ton .Demo, .ton .git {
       width: 80%;
       text-align: center;
       justify-content: center;
+      padding: 8px 16px;
+      font-size: 0.85rem;
     }
     .carousel {
       width: 100%;
@@ -1545,6 +1697,8 @@ body {
     }
     .testimonial-text {
       font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
     .inputBox {
       max-width: 100%;
@@ -1555,30 +1709,39 @@ body {
     }
     .sos > i {
       font-size: 2.5rem !important;
+      margin-bottom: 15px;
     }
     .sos > h2 {
       font-size: 1.2rem;
+      padding-bottom: 8px;
+    }
+    .sos > p {
+      font-size: 0.9rem;
     }
     .lin {
       flex-direction: column;
       gap: 1rem;
+      padding-top: 1.5rem;
     }
     .lin > a {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
     .foot > h1 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
+      padding-top: 1.5rem;
     }
     .foot > h5 {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+      padding-top: 1.5rem;
     }
     .navbar {
       gap: 0.5rem;
       padding: 8px;
+      bottom: 15px;
     }
     .navbar .nav-item {
-      width: 35px;
-      height: 35px;
+      width: 38px;
+      height: 38px;
       font-size: 0.9rem;
     }
     .theme-toggle {
@@ -1587,6 +1750,61 @@ body {
       font-size: 1.1rem;
       top: 15px;
       right: 15px;
+    }
+    .scroll-to-top {
+      width: 45px;
+      height: 45px;
+      font-size: 1.3rem;
+      bottom: 80px;
+    }
+    .toaster {
+      font-size: 0.8rem;
+      padding: 10px 15px;
+      bottom: 70px;
+    }
+  }
+  
+  /* Extra small devices (phones, 360px and down) */
+  @media screen and (max-width: 360px) {
+    .home h1 {
+      font-size: 1.6rem;
+    }
+    #typing-text {
+      font-size: 1rem;
+    }
+    .home > picture img {
+      width: 180px;
+      height: 180px;
+    }
+    .ani {
+      width: 220px;
+      height: 250px;
+    }
+    .ani > picture img {
+      width: 200px;
+      height: 220px;
+    }
+    .box {
+      width: 240px;
+      height: 220px;
+    }
+    .us {
+      width: 220px;
+      height: 260px;
+    }
+    .tt > picture img {
+      height: 100px;
+    }
+    .sos {
+      width: 240px;
+    }
+    .navbar {
+      gap: 0.3rem;
+      padding: 6px;
+    }
+    .navbar .nav-item {
+      width: 36px;
+      height: 36px;
     }
   }
 </style>
@@ -1645,13 +1863,24 @@ body {
 
     <section id="about" class="about">
       <h2><span>About</span> Me.</h2>
-      <div data-aos="fade-right" class="con">
+      <div data-aos="fade-up" class="con" data-aos-duration="1200">
         <div class="ani">
           <picture>
             <source srcset="CEO.png" type="image/webp">
             <img src="CEO.png" alt="Illustrative image of the CEO" loading="lazy"/>
           </picture>
         </div>
+
+        <div class="graph" data-aos="fade-left" data-aos-duration="1200">
+    <p>
+   I'm Abdullateef Abdulbasit, a passionate and dedicated Full Stack Developer with a strong foundation in both front-end and back-end technologies. My journey in web development began with a fascination for how websites are built and has evolved into a commitment to creating efficient, scalable, and user-friendly web applications.
+                        <br><br>
+                        I specialize in leveraging modern technologies like HTML, CSS, JavaScript, and React.js for crafting engaging user interfaces, and I'm proficient in Node.js and various database solutions for robust back-end development. I thrive on solving complex problems and continuously learning new technologies to stay at the forefront of the industry.
+                        <br><br>
+                        Whether it's building responsive designs, optimizing performance, or developing secure APIs, I approach every project with meticulous attention to detail and a focus on delivering high-quality results that exceed expectations.
+                    </p>
+                    <a target="_blank" class="git" href="YOUR_GOOGLE_DRIVE_LINK_HERE"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
+                </div>
       </div>
       <h2><span>My</span> Journey.</h2>
       <div data-aos="fade-up" class="projects">
@@ -1661,7 +1890,7 @@ body {
             <h3>Experience</h3>
             <p>3+ Years Working</p>
           </div>
-        </div>
+        </div> 
         <div class="box">
           <div class="hidden-text">
             <i class="fa fa-thin fa-people-group" style="color: var(--primary-accent);" aria-hidden="true"></i>
@@ -1884,7 +2113,7 @@ body {
         <h4>Please fill the form below.<i class="fa-solid fa-sparkles"></i></h4>
       </div>
       <div class="cnt-content content">
-        <form id="contactForm" action="https://formsubmit.co/silentzy97@gmail.com" method="POST" data-formsubmit>
+        <form id="contactForm" action="https://formsubmit.co/workwithsilent2@gmail.com" method="POST" data-formsubmit>
           <div data-aos="flip-right" class="field">
             <div class="inputBox">
               <input type="text" name="name" required autocomplete="name" />
