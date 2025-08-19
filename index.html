@@ -564,16 +564,13 @@
 
     .projects {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 35px; /* Increased gap */
-      margin: 40px 0;
+      gap: 10px; /* Increased gap */
     }
 
     .box {
-      max-width: 100%; /* Ensures it doesn't overflow its parent */
-      flex-basis: 300px; /* Suggests a preferred width, but allows shrinking/growing */
-      height: auto;
+      width: 280px; /* Wider */
+height: 260px;
       background: linear-gradient(
         188deg,
         var(--box-gradient-start),
@@ -874,6 +871,9 @@
     @media screen and (max-width: 768px) {
       .skill-grid {
         width: 50%;
+      }
+      .exp{
+        display: none;
       }
     }
 
@@ -1985,19 +1985,9 @@
         </div>
         <h2><span>My</span> Journey.</h2>
         <div data-aos="fade-up" class="projects">
-          <div class="box">
-            <div class="hidden-text">
-              <i
-                class="fa fa-thin fa-award"
-                style="color: var(--primary-accent)"
-                aria-hidden="true"
-              ></i>
-              <h3>Experience</h3>
-              <p>3+ Years Working</p>
-            </div>
-          </div>
-          <div class="box">
-            <div class="hidden-text">
+        
+                <div class="box">
+                  <div class="hidden-text">
               <i
                 class="fa fa-thin fa-people-group"
                 style="color: var(--primary-accent)"
@@ -2005,28 +1995,8 @@
               ></i>
               <h3>Clients</h3>
               <p>200+ Clients</p>
-            </div>
-          </div>
-
-          <div class="container">
-            <div class="row g-4">
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="box"><div class="hidden-text">
-              <i
-                class="fa fa-thin fa-people-group"
-                style="color: var(--primary-accent)"
-                aria-hidden="true"
-              ></i>
-              <h3>Clients</h3>
-              <p>200+ Clients</p>
-            </div></div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="box"></div>
               </div>
             </div>
-          </div>
-
           <div class="box">
             <div class="hidden-text">
               <i
@@ -2038,23 +2008,20 @@
               <p>80+ Completed Projects</p>
             </div>
           </div>
+            <div class="box">
+            <div class="hidden-text">
+              <i
+                class="fa fa-thin fa-award"
+                style="color: var(--primary-accent)"
+                aria-hidden="true"
+              ></i>
+              <h3>Experience</h3>
+              <p>3+ Years Working</p>
+            </div>
+          </div>
+          
         </div>
-        <div data-aos="fade-right" class="graph">
-          <p>
-            Hello! I'm Abdullateef Abdulbasit. I'm a passionate web developer
-            focused on transforming ideas into functional websites with over 2
-            years experience in the field. My journey began with a love for
-            coding, and I specialize in HTML, CSS, Javascript, React.js, and
-            Next.js to create responsive and dynamic Web applications. I use
-            Firebase for backend services and rely on Github for collaboration
-            and version control. With a knack for solving problems, I thrive on
-            working with teams to bring projects to life. Let's connect and
-            create something extraordinary together!
-          </p>
-          <a target="_blank" href="https://t.me/@Silent_Achiva"
-            >Let's Talk <i class="fa-brands fa-telegram fa-shake"></i
-          ></a>
-        </div>
+        
       </section>
 
       <section class="exp" id="exp">
@@ -2495,10 +2462,8 @@
 
         // Initialize TypeWriter
         const words = [
-          "Abdullateef Abdulbasit Ayoola",
-          "A Front-end Web Developer",
-          "A Full Stack Developer",
-          "A Graphic Designer",
+          "Abdullateef Abdulbasit",
+          "A Front-end Developer",
           "A Problem Solver",
         ];
         const typingElement = document.getElementById("typing-text");
@@ -2728,21 +2693,12 @@
           "Responsive Design",
           "Firebase",
           "REST APIs",
-          "Problem Solving",
-          "Teamwork",
-          "Agile Methodologies",
           "UI/UX Principles",
           "Frontend Frameworks",
-          "Backend Development",
           "Next.js",
-          "Express.js",
           "Vercel",
-          "Heroku",
           "Web Hosting",
-          "Database Management",
           "Debugging",
-          "Version Control",
-          "Graphic Design",
         ];
 
         const skillCloudContainer = document.querySelector(
