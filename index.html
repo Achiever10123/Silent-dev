@@ -32,7 +32,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preload" href="./pic.png" as="image" />
-    <link rel="stylesheet" href="styles.css" />
     <link rel="preload" href="./CEO.png" as="image" />
     <link
       rel="preload"
@@ -44,6 +43,1848 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
     />
   </head>
+  <style>
+    /* CSS Variables for theming */
+    :root {
+      --bg-color: #1f1f38;
+      --text-color: #ffffff;
+      --secondary-text-color: #e0e0e0;
+      --primary-accent: #4db5ff;
+      --secondary-accent: #00ff9d;
+      --card-bg: #2c2c6c;
+      --border-color: rgba(255, 255, 255, 0.25);
+      --input-bg: #1d2b3a;
+      --footer-bg: #4db5ff;
+      --footer-text-color: #1f1f38;
+      --link-hover-color: #00dfc4;
+      --box-gradient-start: #67aaa9;
+      --box-gradient-end: #524f9a;
+      --shadow-color: rgba(0, 0, 0, 0.2);
+      --shadow-color-strong: rgba(0, 0, 0, 0.4);
+    }
+
+    body.light-mode {
+      --bg-color: #f0f2f5;
+      --text-color: #333333;
+      --secondary-text-color: #555555;
+      --primary-accent: #007bff;
+      --secondary-accent: #28a745;
+      --card-bg: #ffffff;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --input-bg: #f8f9fa;
+      --footer-bg: #e9ecef;
+      --footer-text-color: #333333;
+      --link-hover-color: #0056b3;
+      --box-gradient-start: #a8dadc;
+      --box-gradient-end: #457b9d;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --shadow-color-strong: rgba(0, 0, 0, 0.2);
+    }
+
+    /* General Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", sans-serif; /* Changed font to Inter */
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      letter-spacing: 0.8px; /* Slightly reduced for better readability */
+      font-family: var(--font-family);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary-accent);
+    }
+
+    /* Click animation for all icons */
+    i {
+      transition: transform 0.2s ease;
+    }
+
+    i:active {
+      transform: scale(0.9);
+    }
+
+    /* Toaster Notification */
+    .toaster {
+      position: fixed;
+      bottom: 80px; /* Above navbar */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--primary-accent);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px var(--shadow-color-strong);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1001;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .toaster.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .toaster.success {
+      background-color: var(--secondary-accent);
+    }
+
+    .toaster.error {
+      background-color: #dc3545; /* Red for errors */
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.3rem;
+      box-shadow: 0 2px 8px var(--shadow-color);
+      transition: background-color 0.3s ease, color 0.3s ease,
+        border-color 0.3s ease;
+      z-index: 1000;
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--primary-accent);
+      color: white;
+    }
+
+    /* For Webkit browsers (Chrome, Safari) */
+    ::-webkit-scrollbar {
+      display: none; /* Hides the scrollbar */
+      width: 0; /* For horizontal scrollbars */
+      height: 0; /* For vertical scrollbars */
+    }
+
+    /* For Firefox */
+    body {
+      scrollbar-width: none; /* Hides the scrollbar */
+    }
+
+    /* For Internet Explorer and Edge */
+    body {
+      -ms-overflow-style: none; /* Hides the scrollbar */
+    }
+
+    /* Typing Effect */
+    .typing-container {
+      position: relative;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    #typing-text {
+      font-size: 2.2rem; /* Larger font size */
+      font-weight: 600; /* Bolder */
+      color: var(--secondary-accent);
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      display: flex;
+      background: rgba(0, 0, 0, 0.3); /* Slightly darker background */
+      backdrop-filter: blur(8px); /* Stronger blur */
+      padding: 12px; /* Increased padding */
+      border-radius: 50px;
+      gap: 20px; /* Increased gap */
+      align-items: center;
+      outline: 1px solid rgba(255, 255, 255, 0.4); /* Lighter outline */
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      box-shadow: 0 4px 15px var(--shadow-color-strong);
+    }
+
+    .navbar .nav-item {
+      width: 45px; /* Slightly larger */
+      height: 45px; /* Slightly larger */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      color: var(--text-color);
+      font-size: 1.1rem; /* Slightly larger icon */
+      transition: 0.4s;
+      cursor: pointer;
+    }
+
+    .navbar .nav-item:hover {
+      background-color: var(--primary-accent);
+      color: white;
+    }
+
+    .navbar .nav-item a {
+      color: inherit;
+      display: flex; /* To center icon within anchor */
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .navbar .nav-item.active {
+      background-color: var(--primary-accent);
+      color: white;
+    }
+
+    /* Scroll-to-Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 90px; /* Above the navbar, adjust as needed */
+      right: 20px;
+      background-color: var(--primary-accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 10px var(--shadow-color-strong);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      z-index: 999;
+    }
+
+    .scroll-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-10px);
+    }
+
+    .scroll-to-top:hover {
+      background-color: var(--secondary-accent);
+      transform: translateY(-15px);
+    }
+
+    /* Section Styles */
+    section {
+      padding: 80px 20px; /* Increased top/bottom padding */
+      margin-top: 5px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Home Section */
+    .home {
+      padding-top: 6rem;
+      text-align: center;
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+    }
+
+    .home > span {
+      font-family: "Segoe UI", Tahoma;
+      font-size: 1.2rem;
+      padding-bottom: 10px;
+      color: var(--secondary-text-color);
+    }
+
+    .home h1 {
+      font-size: 3.5rem; /* Larger font size */
+      margin-bottom: 25px;
+      color: var(--primary-accent);
+    }
+
+    .home > picture img {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      margin-bottom: 30px;
+      object-fit: cover;
+      border: 5px solid var(--secondary-accent); /* Thicker, accent border */
+      box-shadow: 0 8px 20px var(--shadow-color-strong);
+    }
+
+    .home > p {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: var(--secondary-text-color);
+    }
+
+    .but {
+      padding-top: 40px;
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .but > a {
+      padding: 14px 30px; /* Adjusted padding */
+      border-radius: 10px; /* More rounded */
+      font-size: 1.05rem;
+      font-weight: bold;
+      transition: 0.4s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .but .git {
+      background-color: transparent;
+      border: 2px solid var(--primary-accent);
+      color: var(--primary-accent);
+    }
+
+    .but .git:hover {
+      background-color: var(--primary-accent);
+      color: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .but .Demo {
+      background-color: var(--primary-accent);
+      color: white;
+      border: 2px solid transparent;
+    }
+
+    .but .Demo:hover {
+      background-color: transparent;
+      border-color: var(--primary-accent);
+      color: var(--primary-accent);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animation for Download Icon */
+    .but .git:hover .fa-download {
+      animation: bounce 0.6s infinite alternate; /* Apply bounce animation */
+    }
+
+    .graph > a:hover .fa-download {
+      /* Also apply to the download button in About section */
+      animation: bounce 0.6s infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-5px); /* Moves icon up slightly */
+      }
+    }
+
+    /* About Section */
+    .about h2 {
+      color: var(--text-color);
+      text-align: center;
+      padding-bottom: 50px;
+      font-size: 3rem;
+    }
+
+    .about h2 > span {
+      animation: hyy 6.2s ease infinite;
+    }
+
+    /* About Section - Card Layout with Flip Animation */
+    .con {
+      width: 50%;
+      margin: 0 auto;
+      max-width: auto;
+      min-height: auto;
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      align-items: center;
+      padding: 30px;
+      border-radius: 20px;
+      background-color: var(--card-bg);
+      box-shadow: 0 10px 30px var(--shadow-color-strong);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      perspective: 1000px;
+    }
+
+    .ani {
+      background: none;
+      width: 20%;
+      height: auto;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      padding: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+    }
+
+    .ani:hover {
+      transform: rotateY(180deg);
+    }
+
+    .ani > picture img {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      object-fit: cover;
+      border-radius: 10px;
+      backface-visibility: hidden;
+      transition: transform 0.6s ease;
+    }
+
+    .ani > picture img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Back side of the card */
+    .ani::after {
+      content: "Abdullateef Abdulbasit";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        var(--primary-accent),
+        var(--secondary-accent)
+      );
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 10px;
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+      padding: 20px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .graph {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
+    .graph > p {
+      color: var(--secondary-text-color);
+      text-align: left;
+      line-height: 1.9;
+      font-size: 1.15rem;
+      padding: 0;
+      font-family: "Inter", sans-serif;
+      margin-bottom: 30px;
+      max-width: none;
+    }
+
+    /* Responsive Adjustments for Card */
+    @media screen and (max-width: 900px) {
+      .con {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 25px;
+        width: 95%;
+        max-width: 100%;
+      }
+
+      .ani {
+        width: 50%;
+        height: auto;
+        box-shadow: none;
+        margin-bottom: 10px;
+      }
+
+      .ani > picture img {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .graph {
+        align-items: center;
+      }
+
+      .graph > p {
+        text-align: center;
+        padding: 0 10px;
+        margin-bottom: 25px;
+      }
+
+      /* Disable flip animation on mobile */
+      .ani:hover {
+        transform: none;
+      }
+
+      .ani::after {
+        display: none;
+      }
+    }
+
+    .projects {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 35px; /* Increased gap */
+      margin: 40px 0;
+    }
+
+    .box {
+      max-width: 100%; /* Ensures it doesn't overflow its parent */
+      flex-basis: 300px; /* Suggests a preferred width, but allows shrinking/growing */
+      height: auto;
+      background: linear-gradient(
+        188deg,
+        var(--box-gradient-start),
+        var(--box-gradient-end)
+      );
+      border: none;
+      border-radius: 20px; /* More rounded */
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .box:hover {
+      transform: translateY(-12px); /* Lift more on hover */
+      box-shadow: 0 15px 30px var(--shadow-color-strong);
+    }
+
+    .hidden-text {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: top 0.5s ease;
+      color: var(--secondary-text-color);
+      padding: 20px;
+    }
+
+    .box:hover .hidden-text {
+      top: 0;
+    }
+
+    .hidden-text h3 {
+      color: var(--text-color);
+      padding-top: 25px;
+      padding-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .hidden-text p {
+      color: var(--secondary-text-color);
+      font-size: 1.15rem;
+    }
+
+    .hidden-text i {
+      border-radius: 50%;
+      padding: 22px;
+      font-size: 2.8rem !important;
+      color: var(--primary-accent);
+    }
+
+    .graph {
+      padding-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .graph > p {
+      color: var(--secondary-text-color);
+      text-align: justify;
+      line-height: 1.9;
+      font-size: 1.15rem;
+      padding: 0 25px;
+      font-family: serif;
+      margin-bottom: 50px;
+      max-width: 850px;
+    }
+
+    .graph > a {
+      color: white;
+      background-color: var(--primary-accent);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: 0.4s ease-in-out;
+      padding: 14px 30px;
+      font-size: 1.05rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .graph > a:hover {
+      background-color: var(--secondary-accent);
+      color: white;
+    }
+
+    /* Skills Section */
+    .exp {
+      padding-top: 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .exp > h2 {
+      color: var(--text-color);
+      padding-top: 1rem;
+      padding-bottom: 4rem;
+      text-align: center;
+      font-size: 3rem;
+    }
+
+    .exp > h2 > span {
+      animation: hyy 6.2s ease infinite;
+      color: var(--text-color);
+    }
+
+    @keyframes hyy {
+      0% {
+        color: #0e12ed;
+      }
+      20% {
+        color: #0eed89;
+      }
+      40% {
+        color: #edc80e;
+      }
+      60% {
+        color: #ed0e0e;
+      }
+      80% {
+        color: #0eed28;
+      }
+      100% {
+        color: #ffffff;
+      }
+    }
+
+    .xx {
+      padding: 4rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .txt {
+      padding: 25px;
+      text-align: center;
+    }
+
+    .txt > span {
+      color: var(--secondary-text-color);
+      font-size: 1.15rem;
+      padding-bottom: 8px;
+      display: block;
+    }
+
+    .txt > h2 {
+      color: var(--text-color);
+      padding-top: 0.5rem;
+      padding-bottom: 3rem;
+      font-size: 2.5rem;
+    }
+
+    .txt > h2 > span {
+      animation: hyy 6.2s ease infinite;
+    }
+
+    .ff {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3.5rem; /* Increased gap */
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .cd1 {
+      height: auto; /* Changed to auto for dynamic content */
+      width: 600px; /* Wider */
+      background-color: var(--card-bg);
+      border-radius: 30px; /* More rounded */
+      box-shadow: 0 10px 30px var(--shadow-color-strong);
+      display: flex;
+      flex-direction: column; /* Changed to column for stacking skill items */
+      gap: 1.5rem; /* Adjusted gap */
+      justify-content: center;
+      align-items: center;
+      transition: 0.5s ease;
+      padding: 25px;
+    }
+
+    .cd1:hover {
+      background: transparent;
+      outline: 2px solid var(--primary-accent);
+      box-shadow: 0 15px 40px var(--shadow-color-strong);
+    }
+
+    /* Skill Item with Progress Bar */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      max-width: 900px; /* Limit width */
+      margin-top: 3rem;
+      padding: 0 20px;
+    }
+
+    .skill-item {
+      background-color: var(--card-bg);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 5px 15px var(--shadow-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skill-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px var(--shadow-color-strong);
+    }
+
+    .skill-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-color);
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .skill-header i {
+      font-size: 1.8rem;
+      color: var(--secondary-accent);
+    }
+
+    .skill-name {
+      flex-grow: 1;
+    }
+
+    .skill-level {
+      font-size: 0.95rem;
+      color: var(--secondary-text-color);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 10px;
+      background-color: var(--border-color);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--primary-accent);
+      width: 0%; /* Initial width for animation */
+      border-radius: 5px;
+      transition: width 1s ease-out; /* Smooth animation */
+    }
+
+    /* Skill Clouds/Tags */
+    .skill-cloud-container {
+      padding-top: 4rem;
+      text-align: center;
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .skill-tag {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      padding: 0.7rem 1.2rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background-color 0.3s ease, color 0.3s ease,
+        transform 0.2s ease;
+      border: 1px solid var(--border-color);
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      background-color: var(--primary-accent);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    @media screen and (max-width: 768px) {
+      .skill-grid {
+        width: 50%;
+      }
+    }
+
+    /* Projects Section (Previous Works) */
+    .projects-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start; /* Align items to the top */
+      gap: 3.5rem;
+      padding-top: 4rem;
+      min-height: 500px; /* Give it a minimum height to prevent layout shifts */
+      position: relative; /* For skeleton loader positioning */
+    }
+
+    .us {
+      height: 320px; /* Taller */
+      width: 280px; /* Wider */
+      border-radius: 25px; /* More rounded */
+      background-color: var(--card-bg);
+      transition: 0.6s ease;
+      outline: none;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      display: flex; /* Flex container for internal alignment */
+      flex-direction: column;
+    }
+
+    .us:hover {
+      background: transparent;
+      outline: 2px solid var(--primary-accent);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px var(--shadow-color-strong);
+    }
+
+    .tt {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      flex-grow: 1; /* Allow content to grow */
+    }
+
+    .tt > picture img {
+      border-radius: 12px;
+      margin-top: 10px;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .tt > picture img:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+
+    .tt > span {
+      padding-top: 18px;
+      font-size: 1.4rem;
+      color: var(--text-color);
+      text-align: center;
+    }
+
+    .ton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      padding-top: 30px;
+      gap: 18px;
+    }
+
+    .ton .Demo,
+    .ton .git {
+      padding: 12px 22px;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: 0.4s ease;
+      font-weight: bold;
+    }
+
+    .ton .Demo {
+      background-color: var(--primary-accent);
+      color: white;
+      border: 2px solid transparent;
+    }
+
+    .ton .Demo:hover {
+      color: var(--primary-accent);
+      background-color: white;
+      border-color: var(--primary-accent);
+    }
+
+    .ton .git {
+      border: 2px solid var(--text-color);
+      color: var(--text-color);
+      background-color: transparent;
+    }
+
+    .ton .git:hover {
+      color: var(--primary-accent);
+      background-color: white;
+      border-color: var(--primary-accent);
+    }
+
+    /* Skeleton Loader Styles */
+    .skeleton-loader {
+      background-color: var(--card-bg);
+      border-radius: 25px;
+      width: 280px;
+      height: 320px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    .skeleton-loader .skeleton-img {
+      width: calc(100% - 40px); /* Adjust for padding */
+      height: 150px;
+      background-color: var(--border-color);
+      border-radius: 12px;
+      margin: 20px 20px 0 20px; /* Top margin for spacing */
+    }
+
+    .skeleton-loader .skeleton-text {
+      width: 70%;
+      height: 20px;
+      background-color: var(--border-color);
+      border-radius: 4px;
+      margin: 18px auto 0 auto;
+    }
+
+    .skeleton-loader .skeleton-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .skeleton-loader .skeleton-button {
+      width: 80px;
+      height: 40px;
+      background-color: var(--border-color);
+      border-radius: 8px;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0.8;
+      }
+    }
+
+    /* Testimonial Section */
+    .testimonial {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+    }
+
+    .testimonial h2 {
+      color: var(--text-color);
+      text-align: center;
+      padding-bottom: 3.5rem;
+      font-size: 3rem;
+    }
+
+    .testimonial > h2 > span {
+      animation: hyy 6.2s ease infinite;
+    }
+
+    .carousel {
+      width: 90%;
+      max-width: 750px; /* Wider max width */
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px var(--shadow-color-strong);
+      background-color: var(--card-bg);
+      position: relative;
+      padding: 50px;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .testimonial-text {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--secondary-text-color);
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .testimonial-author {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--primary-accent);
+      margin-bottom: 8px;
+    }
+
+    .testimonial-role {
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .nav-btn {
+      background-color: var(--primary-accent);
+      border: none;
+      padding: 10px;
+      margin: 0 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s ease;
+      opacity: 0.8;
+    }
+
+    .nav-btn.active {
+      background-color: var(
+        --secondary-accent
+      ); /* Different color for active */
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .nav-btn:hover {
+      background-color: var(--secondary-accent);
+      opacity: 1;
+    }
+
+    /* Contact Section */
+    .Contact-me {
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .Contact-me > h2 {
+      color: var(--text-color);
+      font-family: "Inter", sans-serif;
+      text-align: center;
+      font-size: 3rem;
+      padding-bottom: 25px;
+    }
+
+    .Contact-me > h2 > span {
+      animation: hyy 6.2s ease infinite;
+    }
+
+    .heading {
+      padding: 25px 0 50px;
+      color: var(--primary-accent);
+      font-size: 1.4rem;
+      text-align: center;
+    }
+
+    .heading i {
+      margin-left: 10px;
+    }
+
+    .cnt-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cnt-content form {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      align-items: center;
+      width: 100%;
+      max-width: 650px; /* Wider form */
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .inputBox {
+      position: relative;
+      width: 100%;
+      max-width: 450px; /* Wider input fields */
+    }
+
+    .inputBox input,
+    textarea {
+      width: 100%;
+      padding: 15px; /* Increased padding */
+      border: 1px solid var(--border-color);
+      background: var(--input-bg);
+      border-radius: 10px;
+      outline: none;
+      color: var(--text-color);
+      font-size: 1.05em;
+      transition: 0.5s;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 150px; /* Minimum height for textarea */
+    }
+
+    .inputBox span {
+      position: absolute;
+      left: 15px; /* Adjusted left position */
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      font-size: 1.05em;
+      color: var(--border-color); /* Lighter placeholder color */
+      text-transform: capitalize;
+      transition: 0.5s;
+    }
+
+    .inputBox input:valid ~ span,
+    textarea:focus ~ span,
+    .inputBox input:focus ~ span {
+      color: var(--secondary-accent);
+      transform: translateY(-40px) translateX(0); /* Adjusted transform */
+      font-size: 0.85em; /* Slightly larger moved text */
+      padding: 0 8px; /* Reduced padding */
+      background: var(--bg-color); /* Match body background */
+      border-left: 1px solid var(--secondary-accent);
+      border-right: 1px solid var(--secondary-accent);
+      letter-spacing: 0.1em;
+    }
+
+    .inputBox input:valid,
+    textarea:focus,
+    .inputBox input:focus {
+      border: 1px solid var(--secondary-accent);
+    }
+
+    .sub {
+      background-color: var(--primary-accent);
+      border-radius: 12px;
+      border: 2px solid transparent;
+      outline: none;
+      padding: 14px 35px;
+      width: fit-content;
+      margin-top: 1.5rem;
+      font-size: 1.15rem;
+      color: white;
+      transition: 0.3s ease-in-out;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .sub:hover {
+      background-color: transparent;
+      box-shadow: none;
+      border: 2px solid var(--secondary-accent);
+      color: var(--secondary-accent);
+    }
+
+    .handle {
+      padding-top: 5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3.5rem;
+      justify-content: center;
+      padding-bottom: 7rem;
+    }
+
+    .sos {
+      height: 220px; /* Taller */
+      width: 300px; /* Wider */
+      background-color: var(--card-bg);
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: 0.5s ease;
+      box-shadow: 0 8px 20px var(--shadow-color);
+    }
+
+    .sos:hover {
+      background: transparent;
+      outline: 1px solid var(--secondary-accent);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px var(--shadow-color-strong);
+    }
+
+    .sos > i {
+      font-size: 3.5rem !important;
+      margin-bottom: 20px;
+    }
+
+    .sos > h2 {
+      color: var(--text-color);
+      padding-bottom: 12px;
+      font-size: 1.6rem;
+    }
+
+    .sos > p {
+      color: var(--secondary-text-color);
+      font-size: 1.05rem;
+      padding-bottom: 10px;
+    }
+
+    .sos > a {
+      text-decoration: none;
+      color: var(--primary-accent);
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .sos > a:hover {
+      color: var(--link-hover-color);
+    }
+
+    /* Footer Styles */
+    footer {
+      display: flex;
+      background-color: var(--footer-bg);
+      height: auto;
+      width: 100%;
+      justify-content: center;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .foot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .foot > h1 {
+      color: var(--footer-text-color);
+      padding-top: 2.5rem;
+      transition: 0.4s ease;
+      font-size: 2.5rem;
+    }
+
+    .foot > h1:hover {
+      cursor: text;
+      color: var(--text-color);
+    }
+
+    .lin {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem;
+      padding-top: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .lin > a {
+      font-size: 1.15rem;
+      color: var(--footer-text-color);
+      transition: 0.4s ease;
+      font-weight: bold;
+    }
+
+    .lin > a:hover {
+      color: var(--text-color);
+    }
+
+    .iii {
+      gap: 2.5rem;
+      display: flex;
+      padding-top: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .iii > a {
+      transition: 0.5s ease;
+    }
+
+    .iii > a:hover {
+      transform: scale(1.25);
+    }
+
+    .iii > a > .fa-stack {
+      font-size: 2em;
+    }
+
+    .foot > h5 {
+      color: var(--footer-text-color);
+      padding-top: 2.5rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Custom 404 Page Styles */
+    .error-404 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+    }
+
+    .error-404 h1 {
+      font-size: 8rem;
+      color: var(--primary-accent);
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+    }
+
+    .error-404 h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-text-color);
+    }
+
+    .error-404 p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    .error-404 a.home-link {
+      background-color: var(--primary-accent);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .error-404 a.home-link:hover {
+      background-color: var(--secondary-accent);
+      transform: scale(1.05);
+    }
+
+    @keyframes bounce {
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-30px);
+      }
+      60% {
+        transform: translateY(-15px);
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media screen and (max-width: 900px) {
+      .home h1 {
+        font-size: 2.8rem;
+      }
+      #typing-text {
+        font-size: 1.8rem;
+      }
+      .cd1 {
+        width: 480px;
+        gap: 2.5rem;
+      }
+      .box {
+        width: 280px;
+        height: 260px;
+      }
+      .hidden-text i {
+        font-size: 2.2rem !important;
+      }
+      .testimonial .carousel {
+        width: 95%;
+        padding: 30px;
+      }
+      .inputBox {
+        max-width: 90%;
+      }
+      .skill-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+      .skill-item {
+        padding: 15px;
+      }
+      .skill-header {
+        font-size: 1.1rem;
+      }
+      .skill-header i {
+        font-size: 1.5rem;
+      }
+      .skill-tag {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+      .projects-container {
+        gap: 2.5rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      section {
+        padding: 60px 15px;
+      }
+      .home h1 {
+        font-size: 2.2rem;
+      }
+      #typing-text {
+        font-size: 1.5rem;
+      }
+      .home > p {
+        font-size: 1.05rem;
+      }
+      .but {
+        gap: 1.5rem;
+      }
+      .but > a {
+        padding: 12px 25px;
+        font-size: 0.95rem;
+      }
+      .about h2,
+      .exp h2,
+      .testimonial h2,
+      .Contact-me h2 {
+        font-size: 2.5rem;
+        padding-bottom: 35px;
+      }
+      .con {
+        min-height: 350px;
+        padding-bottom: 40px;
+      }
+      .ani {
+        width: 320px;
+        height: 380px;
+      }
+      .ani > picture img {
+        width: 280px;
+        height: 330px;
+        padding-top: 50px;
+      }
+      .projects {
+        flex-direction: column;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .box {
+        flex-basis: 100%;
+        /*  width: 280px;
+      height: auto; 
+      padding-bottom: 20px; /* Add padding for content */
+      }
+      .hidden-text {
+        position: relative; /* Make it flow with content */
+        top: 0; /* Always visible */
+        background-color: rgba(
+          44,
+          44,
+          108,
+          0.9
+        ); /* Semi-transparent background */
+        padding: 15px;
+        height: auto;
+      }
+      .graph > p {
+        font-size: 1.05rem;
+        padding: 0 15px;
+        margin-bottom: 35px;
+      }
+      .graph > a {
+        padding: 12px 25px;
+        font-size: 0.95rem;
+      }
+      .ff {
+        flex-direction: column;
+        align-items: center;
+      }
+      .cd1 {
+        height: auto;
+        width: 320px;
+        box-shadow: none;
+        gap: 1.5rem;
+        flex-direction: column;
+        padding: 25px 20px;
+      }
+      .lan {
+        padding-left: 0;
+        padding-top: 0;
+        text-align: left;
+        width: 100%;
+      }
+      .lan > li {
+        padding-bottom: 1.5rem;
+      }
+      .projects-container {
+        flex-direction: column;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .us {
+        height: 300px;
+        width: 260px;
+      }
+      .tt > picture img {
+        height: 130px;
+      }
+      .tt > span {
+        font-size: 1.3rem;
+      }
+      .ton {
+        padding-top: 25px;
+        gap: 12px;
+      }
+      .ton .Demo,
+      .ton .git {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+      .carousel {
+        padding: 25px;
+      }
+      .testimonial-text {
+        font-size: 1.1rem;
+      }
+      .inputBox {
+        max-width: 95%;
+      }
+      .inputBox input,
+      textarea {
+        padding: 12px;
+      }
+      .sub {
+        padding: 12px 30px;
+        font-size: 1.05rem;
+      }
+      .handle {
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+      }
+      .sos {
+        height: 200px;
+        width: 280px;
+      }
+      .sos > i {
+        font-size: 3rem !important;
+      }
+      .sos > h2 {
+        font-size: 1.4rem;
+      }
+      .lin {
+        gap: 1.5rem;
+      }
+      .lin > a {
+        font-size: 0.95rem;
+      }
+      .foot > h1 {
+        font-size: 2rem;
+      }
+      .foot > h5 {
+        font-size: 0.85rem;
+      }
+      .navbar {
+        gap: 1rem;
+        padding: 10px;
+      }
+      .navbar .nav-item {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      .skill-grid {
+        grid-template-columns: 1fr; /* Single column on small screens */
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      section {
+        padding: 40px 10px;
+      }
+      .home h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+      #typing-text {
+        font-size: 1.2rem;
+      }
+      .home > p {
+        font-size: 0.9rem;
+        margin-top: 15px;
+      }
+      .home > picture img {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 20px;
+      }
+      .but {
+        flex-direction: column;
+        gap: 1rem;
+        padding-top: 20px;
+      }
+      .but > a {
+        width: 80%;
+        text-align: center;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+      .about h2,
+      .exp h2,
+      .testimonial h2,
+      .Contact-me h2 {
+        font-size: 2rem;
+        padding-bottom: 25px;
+      }
+      .ani {
+        width: 250px;
+        height: 280px;
+      }
+      .ani > picture img {
+        width: 220px;
+        height: 250px;
+        padding-top: 30px;
+      }
+      .box {
+        width: 260px;
+        height: 240px;
+      }
+      .graph > p {
+        font-size: 0.9rem;
+        padding: 0 10px;
+        margin-bottom: 25px;
+        line-height: 1.7;
+      }
+      .cd1 {
+        width: 280px;
+        padding: 20px 15px;
+      }
+      .projects-container {
+        gap: 2rem;
+      }
+      .us {
+        width: 240px;
+        height: 280px;
+      }
+      .tt > picture img {
+        height: 110px;
+      }
+      .tt > span {
+        font-size: 1.1rem;
+      }
+      .ton {
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 20px;
+      }
+      .ton .Demo,
+      .ton .git {
+        width: 80%;
+        text-align: center;
+        justify-content: center;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+      .carousel {
+        width: 100%;
+        padding: 15px;
+      }
+      .testimonial-text {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+      .inputBox {
+        max-width: 100%;
+      }
+      .sos {
+        width: 260px;
+        height: 180px;
+      }
+      .sos > i {
+        font-size: 2.5rem !important;
+        margin-bottom: 15px;
+      }
+      .sos > h2 {
+        font-size: 1.2rem;
+        padding-bottom: 8px;
+      }
+      .sos > p {
+        font-size: 0.9rem;
+      }
+      .lin {
+        flex-direction: column;
+        gap: 1rem;
+        padding-top: 1.5rem;
+      }
+      .lin > a {
+        font-size: 0.9rem;
+      }
+      .foot > h1 {
+        font-size: 1.6rem;
+        padding-top: 1.5rem;
+      }
+      .foot > h5 {
+        font-size: 0.75rem;
+        padding-top: 1.5rem;
+      }
+      .navbar {
+        gap: 0.5rem;
+        padding: 8px;
+        bottom: 15px;
+      }
+      .navbar .nav-item {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+      }
+      .theme-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        top: 15px;
+        right: 15px;
+      }
+      .scroll-to-top {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        bottom: 80px;
+      }
+      .toaster {
+        font-size: 0.8rem;
+        padding: 10px 15px;
+        bottom: 70px;
+      }
+    }
+
+    /* Extra small devices (phones, 360px and down) */
+    @media screen and (max-width: 360px) {
+      .home h1 {
+        font-size: 1.6rem;
+      }
+      #typing-text {
+        font-size: 1rem;
+      }
+      .home > picture img {
+        width: 180px;
+        height: 180px;
+      }
+      .ani {
+        width: 220px;
+        height: 250px;
+      }
+      .ani > picture img {
+        width: 200px;
+        height: 220px;
+      }
+      .box {
+        width: 240px;
+        height: 220px;
+      }
+      .us {
+        width: 220px;
+        height: 260px;
+      }
+      .tt > picture img {
+        height: 100px;
+      }
+      .sos {
+        width: 240px;
+      }
+      .navbar {
+        gap: 0.3rem;
+        padding: 6px;
+      }
+      .navbar .nav-item {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  </style>
   <body>
     <button class="theme-toggle" id="themeToggle">
       <i class="fas fa-moon" id="themeIcon"></i>
@@ -530,7 +2371,487 @@
     </footer>
 
     <div class="toaster" id="toaster"></div>
-    <script src="script.js"></script>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      // Toaster Notification Function
+      function showToaster(message, type = "info") {
+        const toaster = document.getElementById("toaster");
+        toaster.textContent = message;
+        toaster.className = "toaster show"; // Reset classes and show
+        if (type === "success") {
+          toaster.classList.add("success");
+        } else if (type === "error") {
+          toaster.classList.add("error");
+        }
+
+        setTimeout(() => {
+          toaster.classList.remove("show");
+        }, 3000); // Hide after 3 seconds
+      }
+
+      // TypeWriter Class
+      class TypeWriter {
+        constructor(element, words, options = {}) {
+          this.element = element;
+          this.words = words;
+          this.options = {
+            typingSpeed: 100,
+            deleteSpeed: 60,
+            pauseDuration: 1200,
+            ...options,
+          };
+          this.index = 0;
+          this.isDeleting = false;
+          this.text = "";
+          this.animate();
+        }
+
+        animate() {
+          const currentWord = this.words[this.index % this.words.length];
+
+          if (this.isDeleting) {
+            this.text = currentWord.substring(0, this.text.length - 1);
+          } else {
+            this.text = currentWord.substring(0, this.text.length + 1);
+          }
+
+          this.element.textContent = this.text;
+
+          let typeSpeed = this.options.typingSpeed;
+
+          if (this.isDeleting) {
+            typeSpeed = this.options.deleteSpeed;
+          }
+
+          if (!this.isDeleting && this.text === currentWord) {
+            typeSpeed = this.options.pauseDuration;
+            this.isDeleting = true;
+          } else if (this.isDeleting && this.text === "") {
+            this.isDeleting = false;
+            this.index++;
+            typeSpeed = this.options.typingSpeed / 2;
+          }
+
+          setTimeout(() => this.animate(), typeSpeed);
+        }
+      }
+
+      // DOM Content Loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        // Navbar active state logic
+        const navItems = document.querySelectorAll(".navbar .nav-item");
+        const sections = document.querySelectorAll("main section");
+
+        const activateNavItem = (id) => {
+          navItems.forEach((item) => {
+            item.classList.remove("active");
+            const anchor = item.querySelector("a");
+            if (anchor && anchor.getAttribute("href") === `#${id}`) {
+              item.classList.add("active");
+            }
+          });
+        };
+
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.7,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              activateNavItem(entry.target.id);
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach((section) => {
+          observer.observe(section);
+        });
+
+        navItems.forEach((item) => {
+          item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = item
+              .querySelector("a")
+              .getAttribute("href")
+              .substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+              targetSection.scrollIntoView({ behavior: "smooth" });
+              activateNavItem(targetId);
+            }
+          });
+        });
+
+        // Initialize TypeWriter
+        const words = [
+          "Abdullateef Abdulbasit Ayoola",
+          "A Front-end Web Developer",
+          "A Full Stack Developer",
+          "A Graphic Designer",
+          "A Problem Solver",
+        ];
+        const typingElement = document.getElementById("typing-text");
+        if (typingElement) {
+          new TypeWriter(typingElement, words, {
+            typingSpeed: 100,
+            deleteSpeed: 60,
+            pauseDuration: 1500,
+          });
+        }
+
+        // Testimonial Carousel
+        const slidesContainer = document.getElementById("slides");
+        const navButtonsContainer =
+          document.getElementById("navigation-buttons");
+        let currentSlideIndex = 0;
+        const totalSlides = slidesContainer.children.length;
+        let autoSlideInterval;
+        let touchStartX = 0;
+
+        const updateNavButtons = () => {
+          Array.from(navButtonsContainer.children).forEach((button, index) => {
+            if (index === currentSlideIndex) {
+              button.classList.add("active");
+            } else {
+              button.classList.remove("active");
+            }
+          });
+        };
+
+        const goToSlide = (index) => {
+          if (index < 0) {
+            index = totalSlides - 1;
+          } else if (index >= totalSlides) {
+            index = 0;
+          }
+          const slideWidth = slidesContainer.clientWidth;
+          slidesContainer.style.transform = `translateX(-${
+            index * slideWidth
+          }px)`;
+          currentSlideIndex = index;
+          updateNavButtons();
+        };
+
+        const startAutoSlide = () => {
+          clearInterval(autoSlideInterval);
+          autoSlideInterval = setInterval(() => {
+            goToSlide(currentSlideIndex + 1);
+          }, 5000);
+        };
+
+        navButtonsContainer.addEventListener("click", (e) => {
+          if (e.target.classList.contains("nav-btn")) {
+            const slideIndex = parseInt(e.target.dataset.slide);
+            goToSlide(slideIndex);
+            startAutoSlide();
+          }
+        });
+
+        slidesContainer.addEventListener(
+          "touchstart",
+          (e) => {
+            touchStartX = e.touches[0].clientX;
+            clearInterval(autoSlideInterval);
+          },
+          { passive: true }
+        ); // passive: true for better scroll performance
+
+        slidesContainer.addEventListener(
+          "touchmove",
+          (e) => {
+            // Only prevent default if it's a significant horizontal swipe
+            if (Math.abs(e.touches[0].clientX - touchStartX) > 10) {
+              e.preventDefault();
+            }
+          },
+          { passive: false }
+        );
+
+        slidesContainer.addEventListener("touchend", (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const diffX = touchStartX - touchEndX;
+
+          if (diffX > 50) {
+            goToSlide(currentSlideIndex + 1);
+          } else if (diffX < -50) {
+            goToSlide(currentSlideIndex - 1);
+          }
+          startAutoSlide();
+        });
+
+        // Initial load for carousel
+        goToSlide(0);
+        startAutoSlide();
+
+        // Adjust slide position on window resize
+        window.addEventListener("resize", () => {
+          goToSlide(currentSlideIndex);
+        });
+
+        // FormSubmit AJAX handling
+        const contactForm = document.getElementById("contactForm");
+        if (contactForm) {
+          contactForm.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+            const submitButton = this.querySelector(".sub");
+            const originalButtonText = submitButton.value;
+
+            submitButton.value = "Sending...";
+            submitButton.disabled = true;
+
+            try {
+              const response = await fetch(this.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                  Accept: "application/json", // Important for FormSubmit AJAX
+                },
+              });
+
+              if (response.ok) {
+                showToaster("Message sent successfully!", "success");
+                this.reset(); // Clear the form
+              } else {
+                const data = await response.json();
+                if (data.message) {
+                  showToaster("Error: " + data.message, "error");
+                } else {
+                  showToaster(
+                    "Failed to send message. Please try again.",
+                    "error"
+                  );
+                }
+              }
+            } catch (error) {
+              console.error("Network error:", error);
+              showToaster(
+                "Network error. Please check your connection.",
+                "error"
+              );
+            } finally {
+              submitButton.value = originalButtonText;
+              submitButton.disabled = false;
+            }
+          });
+        }
+
+        // Light/Dark Mode Toggle
+        const themeToggle = document.getElementById("themeToggle");
+        const themeIcon = document.getElementById("themeIcon");
+        const body = document.body;
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          body.classList.add(savedTheme);
+          if (savedTheme === "light-mode") {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+          } else {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+          }
+        } else {
+          // Default to dark mode if no preference is saved
+          body.classList.add("dark-mode");
+          localStorage.setItem("theme", "dark-mode");
+        }
+
+        themeToggle.addEventListener("click", () => {
+          if (body.classList.contains("light-mode")) {
+            body.classList.remove("light-mode");
+            body.classList.add("dark-mode");
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+            localStorage.setItem("theme", "dark-mode");
+          } else {
+            body.classList.remove("dark-mode");
+            body.classList.add("light-mode");
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+            localStorage.setItem("theme", "light-mode");
+          }
+        });
+
+        // Progress Bars Animation on Scroll
+        const animateProgressBar = (progressBar) => {
+          const progress = parseInt(progressBar.dataset.progress, 10);
+          if (
+            progressBar.style.width === "0%" ||
+            progressBar.style.width === ""
+          ) {
+            // Animate only if not already animated
+            progressBar.style.width = `${progress}%`;
+          }
+        };
+
+        const skillSection = document.getElementById("exp");
+        const progressBars = document.querySelectorAll(".progress-bar");
+        let skillSectionObserved = false;
+
+        const progressBarObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !skillSectionObserved) {
+                progressBars.forEach((bar) => animateProgressBar(bar));
+                skillSectionObserved = true; // Ensure animation runs only once
+                observer.unobserve(entry.target); // Stop observing once animated
+              }
+            });
+          },
+          {
+            threshold: 0.5, // Trigger when 50% of the section is visible
+          }
+        );
+
+        if (skillSection) {
+          progressBarObserver.observe(skillSection);
+        }
+
+        // Dynamic Skill Clouds/Tags
+        const additionalSkills = [
+          "Git",
+          "GitHub",
+          "Responsive Design",
+          "Firebase",
+          "REST APIs",
+          "Problem Solving",
+          "Teamwork",
+          "Agile Methodologies",
+          "UI/UX Principles",
+          "Frontend Frameworks",
+          "Backend Development",
+          "Next.js",
+          "Express.js",
+          "Vercel",
+          "Heroku",
+          "Web Hosting",
+          "Database Management",
+          "Debugging",
+          "Version Control",
+          "Graphic Design",
+        ];
+
+        const skillCloudContainer = document.querySelector(
+          ".skill-cloud-container"
+        );
+        if (skillCloudContainer) {
+          additionalSkills.forEach((skill) => {
+            const span = document.createElement("span");
+            span.classList.add("skill-tag");
+            span.textContent = skill;
+            skillCloudContainer.appendChild(span);
+          });
+        }
+
+        // Simulate Project Data Fetch with Loading Animation
+        const projectsData = [
+          {
+            imgSrc: "./tda.png",
+            fallbackImgSrc: "./tda.png",
+            altText: "Screenshot of a To-Do App project",
+            title: "To-Do App",
+            githubLink: "https://github.com/Achiever10123/To-do.-app",
+            demoLink: "https://todo-app-phi-seven-58.vercel.app",
+          },
+          {
+            imgSrc: "./LI.png",
+            fallbackImgSrc: "./LI.png",
+            altText: "Screenshot of a Login Form project",
+            title: "Login Form",
+            githubLink: "https://github.com/Achiever10123/Login-form",
+            demoLink: "https://login-form-beta-seven.vercel.app",
+          },
+          {
+            imgSrc: "./SU.png",
+            fallbackImgSrc: "./SU.png",
+            altText: "Screenshot of a Sign-up Form project",
+            title: "Sign-up Form",
+            githubLink: "https://github.com/Achiever10123/Signup-form",
+            demoLink: "https://signup-form-pink.vercel.app",
+          },
+          {
+            imgSrc: "./tts.png",
+            fallbackImgSrc: "./tts.png",
+            altText: "Screenshot of a Text-to-Speech Converter project",
+            title: "Text To Speech",
+            githubLink: "https://github.com/Achiever10123/text_to_speech",
+            demoLink: "https://texttospeech-eosin.vercel.app",
+          },
+          // Add more projects here
+        ];
+
+        const projectsContainer = document.getElementById("projectsContainer");
+
+        const loadProjects = () => {
+          // Clear skeleton loaders
+          projectsContainer.innerHTML = "";
+
+          projectsData.forEach((project, index) => {
+            const projectDiv = document.createElement("div");
+            projectDiv.classList.add("us");
+            projectDiv.setAttribute("data-aos", "fade-up"); // Add AOS animation to each project
+
+            // Add a delay to AOS animation for staggered effect
+            projectDiv.setAttribute("data-aos-delay", (index * 100).toString());
+
+            projectDiv.innerHTML = `
+            <div class="tt">
+              <picture>
+                <source srcset="${project.imgSrc}" type="image/webp">
+                <img class="tda" src="${project.fallbackImgSrc}" alt="${project.altText}" loading="lazy"/>
+              </picture>
+              <span>${project.title}</span>
+              <div class="ton">
+                <a target="_blank" class="git" href="${project.githubLink}">Github</a>
+                <a target="_blank" class="Demo" href="${project.demoLink}">Demo</a>
+              </div>
+            </div>
+          `;
+            projectsContainer.appendChild(projectDiv);
+          });
+
+          // Re-initialize AOS after dynamic content is added
+          AOS.refresh();
+        };
+
+        // Show skeleton loaders for a few seconds, then load actual projects
+        setTimeout(() => {
+          loadProjects();
+        }, 1500); // Simulate 1.5 second loading time
+
+        // Scroll-to-Top Button functionality
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            // Show button after scrolling 300px
+            scrollToTopBtn.classList.add("show");
+          } else {
+            scrollToTopBtn.classList.remove("show");
+          }
+        });
+
+        scrollToTopBtn.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
   </body>
 </html>
