@@ -24,7 +24,8 @@
   <meta name="twitter:description" content="My professional portfolio showcasing expertise in HTML, CSS, JavaScript, React.js, Node.js, and responsive web development. Explore my projects and contact me for web solutions.">
   <meta name="twitter:image" content="https://silentdev-rho.vercel.app/CEO.png">
 
-    <link rel="icon" href="./fa.jpg" type="image/x-icon" />
+  <link rel="icon" href="./fa.jpg" type="image/x-icon" />
+  <link rel="manifest" href="/manifest.json" />
     <script
       src="https://kit.fontawesome.com/aea47affd4.js"
       crossorigin="anonymous"
@@ -3141,6 +3142,20 @@ body {
     <div class="toaster" id="toaster"></div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+              // Registration successful
+              console.log('ServiceWorker registration successful:', registration.scope);
+            }, function(err) {
+              // Registration failed
+              console.log('ServiceWorker registration failed:', err);
+            });
+        });
+      }
+    </script>
     <script>
       // Initialize AOS
       AOS.init({
